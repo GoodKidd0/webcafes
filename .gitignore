@@ -1,0 +1,22 @@
+# Ignore Python bytecode files
+__pycache__/
+*.pyc
+*.pyo
+
+# Ignore the virtual environment folder
+.venv/
+
+# Ignore environment variables or configuration files
+.env
+
+# Ignore database files
+cafes.db
+*.sqlite
+
+# Ignore the secret key
+secrets.json
+
+# Ignore log files
+*.log
+# created by virtualenv automatically
+.venv/Lib
