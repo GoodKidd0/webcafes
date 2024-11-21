@@ -1,0 +1,41 @@
+.add-cafe-form {
+    margin: 20px 0;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+.add-cafe-form form {
+    display: grid;
+    gap: 10px;
+}
+.add-cafe-form input {
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+}
+.add-cafe-form button {
+    padding: 10px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+}
+.add-cafe-form button:hover {
+    background-color: #45a049;
+}
+.cafe-list table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.cafe-list th, .cafe-list td {
+    padding: 10px;
+    border: 1px solid #ddd;
+    text-align: left;
+}
+
+.cafe-list th {
+    background-color: #f4f4f4;
+}

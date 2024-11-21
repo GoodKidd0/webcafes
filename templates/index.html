@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cafe Workspaces</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+
+<body>
+    <!-- Check if user is logged in -->
+    <div class="header">
+        {% if current_user.is_authenticated %}
+            <h2>Welcome {{ current_user.username }}!</h2>
+            <!-- Log out button displayed next to welcome message -->
+            <form action="{{ url_for('logout') }}" method="POST" style="display:inline;">
+                <button type="submit">Log Out</button>
+            </form>
+        {% else %}
+            <h3> Register and Login to upload cafes to the website</h3>
+            <a href="{{ url_for('login') }}">Login</a> |
+            <a href="{{ url_for('register') }}">Register</a>
+        {% endif %}
+    </div>
+
+    <div class="cafe-list">
+        <h2>Existing Cafes</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Location</th>
+                    <th>Has Sockets</th>
+                    <th>Has Toilet</th>
+                    <th>Has WiFi</th>
+                    <th>Can Take Calls</th>
+                    <th>Seats</th>
+                    <th>Price</th>
+                    {% if current_user.id == 1 %}
+                    <th>Actions</th>
+                    {% endif %}
+                </tr>
+            </thead>
+            <tbody>
+                {% for cafe in cafes %}
+                <tr>
+                    <td>{{ cafe.name }}</td>
+                    <td>{{ cafe.location }}</td>
+                    <td>{{ 'Yes' if cafe.has_sockets else 'No' }}</td>
+                    <td>{{ 'Yes' if cafe.has_toilet else 'No' }}</td>
+                    <td>{{ 'Yes' if cafe.has_wifi else 'No' }}</td>
+                    <td>{{ 'Yes' if cafe.can_take_calls else 'No' }}</td>
+                    <td>{{ cafe.seats or 'N/A' }}</td>
+                    <td>{{ cafe.coffee_price or 'N/A' }}</td>
+                    {% if current_user.id == 1 %}
+                    <!-- Admin can see the delete button -->
+                    <td>
+                        <form action="{{ url_for('delete_cafe', cafe_id=cafe.id) }}" method="POST" style="display:inline;">
+                            <button type="submit">Delete</button>
+                        </form>
+                    </td>
+                    {% endif %}
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <div class="add-cafe-form">
+        <h2>Add a New Cafe</h2>
+        <form id="add-cafe-form">
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" required>
+
+            <label for="map_url">Map URL:</label>
+            <input type="url" id="map_url" name="map_url" required>
+
+            <label for="location">Location:</label>
+            <input type="text" id="location" name="location" required>
+
+            <label for="has_sockets">Has Sockets:</label>
+            <input type="checkbox" id="has_sockets" name="has_sockets">
+
+            <label for="has_toilet">Has Toilet:</label>
+            <input type="checkbox" id="has_toilet" name="has_toilet">
+
+            <label for="has_wifi">Has WiFi:</label>
+            <input type="checkbox" id="has_wifi" name="has_wifi">
+
+            <label for="can_take_calls">Can Take Calls:</label>
+            <input type="checkbox" id="can_take_calls" name="can_take_calls">
+
+            <label for="seats">Seats:</label>
+            <input type="text" id="seats" name="seats">
+
+            <label for="coffee_price">Coffee Price:</label>
+            <input type="text" id="coffee_price" name="coffee_price">
+
+            <button type="submit">Add Cafe</button>
+        </form>
+    </div>
+
+    <script src="{{ url_for('static', filename='scripts.js') }}"></script>
+</body>
+</html>
